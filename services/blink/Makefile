@@ -1,0 +1,3 @@
+
+test:
+	rails test
