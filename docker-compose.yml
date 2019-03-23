@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+
+  nginx:
+    build:
+      context: services/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    command: /bin/bash -c "exec nginx -g 'daemon off;'"
+
+  app:
+    build:
+      context: services/blink
+      dockerfile: Dockerfile.development
+    command: sh -c "rm -f /usr/src/app/tmp/pids/server.pid && ./bin/rails server -b 0.0.0.0"
+    ports:
+      - 3000:3000
+    volumes:
+      - "~/.bash_history:/.bash_history"
+      - "./services/blink:/usr/src/app:cached"
+      - "/tmp:/tmp:delegated"
