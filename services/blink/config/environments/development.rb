@@ -14,6 +14,8 @@ Rails.application.configure do
 
   config.web_console.whitelisted_ips = ENV['DOCKER_HOST_IP']
 
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
