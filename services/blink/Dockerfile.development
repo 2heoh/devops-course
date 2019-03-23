@@ -1,0 +1,16 @@
+FROM ruby:2.5.3
+
+RUN apt-get update -qq && apt-get install -y nodejs
+ENV PROJECT_ROOT /usr/src/app
+WORKDIR $PROJECT_ROOT
+RUN gem install execjs
+COPY Gemfile $PROJECT_ROOT/Gemfile
+COPY Gemfile.lock $PROJECT_ROOT/Gemfile.lock
+
+RUN bundle install
+
+COPY bin/entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
+
