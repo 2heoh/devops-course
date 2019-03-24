@@ -2,3 +2,7 @@
 tmp
 log
 *.retry
+.terraform/
+*.tfstate
+*.backup
+*.tfvars
