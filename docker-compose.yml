@@ -11,12 +11,14 @@ services:
     command: /bin/bash -c "exec nginx -g 'daemon off;'"
 
   app:
+    env_file:
+      - .env
     build:
       context: services/blink
       dockerfile: Dockerfile.development
     command: sh -c "rm -f /usr/src/app/tmp/pids/server.pid && ./bin/rails server -b 0.0.0.0"
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
     volumes:
       - "~/.bash_history:/.bash_history"
       - "./services/blink:/usr/src/app:cached"
