@@ -32,7 +32,6 @@ resource "digitalocean_domain" "blink2" {
   ip_address = "${digitalocean_droplet.blink2.ipv4_address}"
 }
 
-
 resource "digitalocean_loadbalancer" "public" {
   name = "blink-loadbalancer"
   region = "nyc1"
