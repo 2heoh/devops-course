@@ -3,7 +3,7 @@ USER = "$(shell id -u):$(shell id -g)"
 app:
 	docker-compose up
 
-app-build:
+app-build: development-setup-env
 	docker-compose build
 
 app-bash:
@@ -14,4 +14,3 @@ app-setup: development-setup-env app-build
 
 development-setup-env:
 	ansible-playbook ansible/development.yml -i ansible/development -vv
-			
