@@ -2,6 +2,9 @@
 - hosts: prod
   gather_facts: false
   tasks:
+    - name: Ping
+      ping:
+      tags: ping
 
     - name: Install system packages
       apt:
