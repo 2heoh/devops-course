@@ -1,0 +1,10 @@
+localhost ansible_connection=local
+
+[prod]
+devops.sergeylobin.ru
+devops2.sergeylobin.ru
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=root
+
