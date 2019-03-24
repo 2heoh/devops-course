@@ -1,0 +1,39 @@
+---
+- hosts: prod
+  gather_facts: false
+  tasks:
+
+    - name: Install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: true
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+
+    - name: Add gpg-key
+      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+    - name: Set fingerprint
+      shell: apt-key fingerprint 0EBFCD88
+
+    - shell: lsb_release -cs
+      register: lsb_release
+
+    - name: Add repository
+      shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable"
+
+    - name: Install docker
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:        
+        packages:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io

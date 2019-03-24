@@ -1,0 +1,47 @@
+---
+- hosts: prod
+  gather_facts: false
+  tasks:
+
+    - name: Install system packages
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install dependencies
+      pip:
+        name:
+          - docker
+
+    - name: Create a network
+      docker_network:
+        name: blink_network
+
+    - name: Start app image 
+      docker_container:
+        name: app
+        image: 2heoh/workshop-devops-app
+        state: started
+        restart: yes        
+        ports:
+        - "3000:3000"
+        env:
+          SECRET_KEY_BASE={{ secret_key }}
+          RAILS_ENV=production
+        networks:
+          - name: blink_network
+      tags:
+        - app
+
+    - name: Start nginx image 
+      docker_container:
+        name: nginx
+        image: 2heoh/workshop-devops-nginx
+        state: started
+        restart: yes        
+        ports:
+        - "80:80"
+        networks:
+          - name: blink_network
+      tags:
+        - nginx
