@@ -20,7 +20,7 @@
 ### Третий созвон
 * sudo lsof -i :portnumber 
 * https://wiki.archlinux.org/index.php/Network_bridge
-* Книжка Лобачевский про операционки
+* Книжка Робачевский про операционки
 * InterProcessCommunication (IPC)
 * Ambasador Pattern
 * https://www.youtube.com/watch?v=WPCz_U7D8PI&t=4873s
@@ -48,6 +48,9 @@
     * Написать тестовый фреймворк
     * Web-сервер
     * Event loop
+
+Как настроена супервизия:
+```    
 docker_container:
         recreate: true
         name: hexlet-basics-nginx
@@ -64,3 +67,4 @@ docker_container:
         networks:
           - name: "{{ hexlet_basics_docker_network }}"
       tags: [webserver]
+```
