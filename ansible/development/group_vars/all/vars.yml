@@ -1,0 +1,2 @@
+rails_env: development
+dockerfile: Dockerfile.development
