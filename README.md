@@ -12,8 +12,32 @@ services/
 	nginx/ - proxy-сервер
 terraform/ - скрипты для создания кластера на DO
 ```
+## Как рабоать
 
 Почти все что нужно в Makefile
+
+### Разработка
+```
+make app-build 					- собирает локальный docker image
+make app       					- запускает приложение для локальной работы
+```
+
+### Секреты
+```
+make ansible-vaults-encrypt 	- создаем vault
+make ansible-vaults-edit 		- правим vault
+```
+
+### Боевая среда
+
+для начала нужны дропелеты куда ставить - см. **Terraform**
+
+```
+make production-ping			- проверяем что тачки живы и ssh работает
+make production-setup			- ставим docker
+make production-deploy 			- поднимаем приложение и nginx
+make production-deploy-app		- ставим только
+```
 
 ### Terraform
 
@@ -22,6 +46,8 @@ terraform/ - скрипты для создания кластера на DO
 do_token = "<реальный токен из DO>"
 ```
 
-TODO:
+## TODO
 * Поупражняться со state - прикрутить к приложению базу и порабоать с ней в бою
 * Причесать все переменные и названия сущностей
+* Шаблонизировать создание do.tf из ansible
+* Добавить пользователя на ноды в DO и запускать не из-под root :)
